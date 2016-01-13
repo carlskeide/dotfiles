@@ -30,6 +30,7 @@ export EDITOR=nano
 export HISTCONTROL=ignoredups
 export HISTCONTROL=ignoreboth
 export HISTSIZE=1000
+shopt -s histappend
 
 export PATH="/sbin:/usr/sbin:/usr/local/bin:$PATH"
 [[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
