@@ -8,7 +8,7 @@ PROMPT_GITSTATUS=1
 # Test for an interactive shell.
 if [[ $- != *i* ]] ; then
         # Shell is non-interactive.  Be done now!
-        exit 0
+        return
 fi
 
 # check the window size after each command
