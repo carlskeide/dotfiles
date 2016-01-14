@@ -1,3 +1,7 @@
 [user]
 	name = Carl Skeide
-	email = carl@skeide.se
+	email = dev@null.com
+
+[push]
+        default = simple
+
