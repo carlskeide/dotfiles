@@ -20,3 +20,7 @@ alias rcopy="rsync -vahP"
 
 alias dk="docker"
 alias dkco="docker-compose"
+alias dkma="docker-machine"
+
+alias workon="pushd . &>/dev/null && workon"
+alias workoff="deactivate"
