@@ -35,9 +35,8 @@ GIT_STATUS_HELPER=~/dotfiles/sbp_git_status.sh
 export DISPLAY=:0
 export EDITOR=nano
 
-export HISTCONTROL=ignoredups
 export HISTCONTROL=ignoreboth
-export HISTSIZE=1000
+export HISTSIZE=4000
 shopt -s histappend
 
 export PATH="/sbin:/usr/sbin:/usr/local/bin:$PATH"
