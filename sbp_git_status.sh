@@ -224,7 +224,7 @@ function sexy_bash_prompt_get_git_info () {
 }
 
 if sexy_bash_prompt_is_on_git; then
-  echo -n "$sexy_bash_prompt_git_status_color$(sexy_bash_prompt_get_git_info)"
-  echo -n "$sexy_bash_prompt_git_progress_color$(sexy_bash_prompt_get_git_progress)"
-  echo -n "$sexy_bash_prompt_reset"
+  echo -n "\[$sexy_bash_prompt_git_status_color$(sexy_bash_prompt_get_git_info)"
+  echo -n "\[$sexy_bash_prompt_git_progress_color$(sexy_bash_prompt_get_git_progress)"
+  echo -n "\[$sexy_bash_prompt_reset"
 fi
