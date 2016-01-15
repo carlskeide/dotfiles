@@ -55,6 +55,7 @@ fi
 
 ## Shell features
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
+[[ -f /usr/bin/virtualenvwrapper.sh ]] && . /usr/bin/virtualenvwrapper.sh
 
 
 ## GUI features
@@ -93,8 +94,8 @@ function prompt_cmd {
     && CLR_USER="${COLOR_RED}" \
     || CLR_USER="${COLOR_GREEN}"
 
-    STATUS_VENV="$(prompt_cmd_git)"
-    STATUS_GIT="$(prompt_cmd_venv)"
+    STATUS_VENV="$(prompt_cmd_venv)"
+    STATUS_GIT="$(prompt_cmd_git)"
 
     PS1="${TITLEBAR}\
 ${CLR_USER}\u\
