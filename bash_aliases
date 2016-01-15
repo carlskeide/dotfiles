@@ -21,6 +21,7 @@ alias rcopy="rsync -vahP"
 alias dk="docker"
 alias dkco="docker-compose"
 alias dkma="docker-machine"
+alias docker-prune="docker volume ls -qf dangling=true | xargs docker volume rm"
 
 alias workon="pushd . &>/dev/null && workon"
 alias workoff="deactivate"
