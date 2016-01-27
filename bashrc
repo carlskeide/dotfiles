@@ -73,7 +73,7 @@ function prompt_cmd_git {
     GIT_STATUS="$(${GIT_STATUS_HELPER})"
 
     [[ -n "${GIT_STATUS}" ]] \
-    && echo "${COLOR_NONE}:${GIT_STATUS}"
+    && echo "${COLOR_NONE}:${GIT_STATUS} "
 }
 
 function prompt_cmd_venv {

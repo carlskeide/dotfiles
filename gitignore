@@ -1,0 +1,17 @@
+*.pyc
+*~
+.DS_Store
+
+.project
+.pydevproject
+.settings
+.vagrant
+.coverage
+.sass-cache
+.bundle
+.cache
+.bash*
+
+/venv
+/env
+/py

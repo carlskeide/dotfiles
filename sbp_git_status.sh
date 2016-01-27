@@ -10,59 +10,16 @@ sexy_bash_prompt_dirty_unpulled_symbol="▼"
 sexy_bash_prompt_unpushed_unpulled_symbol="⬡"
 sexy_bash_prompt_dirty_unpushed_unpulled_symbol="⬢"
 
-# If we are on a colored terminal
-if tput setaf 1 &> /dev/null; then
-  # Reset the shell from our `if` check
-  tput sgr0 &> /dev/null
-
-  # If you would like to customize your colors, use
-  # # Attribution: http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
-  # for i in $(seq 0 $(tput colors)); do
-  #   echo " $(tput setaf $i)Text$(tput sgr0) $(tput bold)$(tput setaf $i)Text$(tput sgr0) $(tput sgr 0 1)$(tput setaf $i)Text$(tput sgr0)  \$(tput setaf $i)"
-  # done
-
-  # Save common color actions
-  sexy_bash_prompt_bold="$(tput bold)"
-  sexy_bash_prompt_reset="$(tput sgr0)"
-
-  # If the terminal supports at least 256 colors, write out our 256 color based set
-  if [[ "$(tput colors)" -ge 256 ]] &> /dev/null; then
-    sexy_bash_prompt_user_color="$sexy_bash_prompt_bold$(tput setaf 27)" # BOLD BLUE
-    sexy_bash_prompt_preposition_color="$sexy_bash_prompt_bold$(tput setaf 7)" # BOLD WHITE
-    sexy_bash_prompt_device_color="$sexy_bash_prompt_bold$(tput setaf 39)" # BOLD CYAN
-    sexy_bash_prompt_dir_color="$sexy_bash_prompt_bold$(tput setaf 76)" # BOLD GREEN
-    sexy_bash_prompt_git_status_color="$sexy_bash_prompt_bold$(tput setaf 154)" # BOLD YELLOW
-    sexy_bash_prompt_git_progress_color="$sexy_bash_prompt_bold$(tput setaf 9)" # BOLD RED
-  else
-  # Otherwise, use colors from our set of 8
-    sexy_bash_prompt_user_color="$sexy_bash_prompt_bold$(tput setaf 4)" # BOLD BLUE
-    sexy_bash_prompt_preposition_color="$sexy_bash_prompt_bold$(tput setaf 7)" # BOLD WHITE
-    sexy_bash_prompt_device_color="$sexy_bash_prompt_bold$(tput setaf 6)" # BOLD CYAN
-    sexy_bash_prompt_dir_color="$sexy_bash_prompt_bold$(tput setaf 2)" # BOLD GREEN
-    sexy_bash_prompt_git_status_color="$sexy_bash_prompt_bold$(tput setaf 3)" # BOLD YELLOW
-    sexy_bash_prompt_git_progress_color="$sexy_bash_prompt_bold$(tput setaf 1)" # BOLD RED
-  fi
-
-  sexy_bash_prompt_symbol_color="$sexy_bash_prompt_bold" # BOLD
-
-else
-# Otherwise, use ANSI escape sequences for coloring
-  # If you would like to customize your colors, use
-  # DEV: 30-39 lines up 0-9 from `tput`
-  # for i in $(seq 0 109); do
-  #   echo -n -e "\033[1;${i}mText$(tput sgr0) "
-  #   echo "\033[1;${i}m"
-  # done
-
-  sexy_bash_prompt_reset="\033[m"
-  sexy_bash_prompt_user_color="\033[1;34m" # BLUE
-  sexy_bash_prompt_preposition_color="\033[1;37m" # WHITE
-  sexy_bash_prompt_device_color="\033[1;36m" # CYAN
-  sexy_bash_prompt_dir_color="\033[1;32m" # GREEN
-  sexy_bash_prompt_git_status_color="\033[1;33m" # YELLOW
-  sexy_bash_prompt_git_progress_color="\033[1;31m" # RED
-  sexy_bash_prompt_symbol_color="" # NORMAL
-fi
+# Basic colors
+COLOR_BLACK="\[\e[30;49m\]"
+COLOR_RED="\[\e[31;49m\]"
+COLOR_GREEN="\[\e[32;49m\]"
+COLOR_YELLOW="\[\e[33;49m\]"
+COLOR_BLUE="\[\e[34;49m\]"
+COLOR_MAGENTA="\[\e[35;49m\]"
+COLOR_CYAN="\[\e[36;49m\]"
+COLOR_WHITE="\[\e[37;49m\]"
+COLOR_NONE="\[\e[0m\]"
 
 # Define helper functions
 function sexy_bash_prompt_get_git_branch() {
@@ -213,18 +170,16 @@ function sexy_bash_prompt_get_git_info () {
   # If there are any branches
   if [[ "$branch" != "" ]]; then
     # Echo the branch
-    output="$branch"
+    echo -n "${COLOR_YELLOW}$branch"
 
-    # Add on the git status
-    output="$output$(sexy_bash_prompt_get_git_status)"
+    # Add on the git status symbol
+    echo -n "${COLOR_WHITE}$(sexy_bash_prompt_get_git_status)"
 
-    # Echo our output-color-on-bash-scripts
-    echo "$output"
   fi
 }
 
 if sexy_bash_prompt_is_on_git; then
-  echo -n "\[$sexy_bash_prompt_git_status_color$(sexy_bash_prompt_get_git_info)"
-  echo -n "\[$sexy_bash_prompt_git_progress_color$(sexy_bash_prompt_get_git_progress)"
-  echo -n "\[$sexy_bash_prompt_reset"
+  echo -n "$(sexy_bash_prompt_get_git_info)"
+  echo -n "${COLOR_RED}$(sexy_bash_prompt_get_git_progress)"
+  echo -n "${COLOR_NONE}"
 fi
