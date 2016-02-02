@@ -9,9 +9,9 @@
 .coverage
 .sass-cache
 .bundle
+.idea
 .cache
 .bash*
 
 /venv
-/env
 /py
