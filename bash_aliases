@@ -25,3 +25,6 @@ alias docker-prune="docker volume ls -qf dangling=true | xargs docker volume rm"
 
 alias workon="pushd . &>/dev/null && workon"
 alias workoff="deactivate"
+
+alias git-log="git log --graph --oneline --decorate"
+alias git-commit="git commit -m"
