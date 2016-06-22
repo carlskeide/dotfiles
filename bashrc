@@ -11,9 +11,15 @@ if [[ $- != *i* ]] ; then
         return
 fi
 
+# append to the history file, don't overwrite it
+shopt -s histappend
+# reformat multiline commands
+shopt -s cmdhist
 # check the window size after each command
 shopt -s checkwinsize
-
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
 
 ## Internal variables
 # Prompt colors
@@ -36,8 +42,11 @@ export DISPLAY=:0
 export EDITOR=nano
 
 export HISTCONTROL=ignoreboth
-export HISTSIZE=4000
-shopt -s histappend
+export HISTIGNORE='ls:ll:l:bg:fg:history'
+export HISTTIMEFORMAT='%F %T '
+
+export HISTSIZE=10000
+export HISTFILESIZE=10000
 
 export PATH="/sbin:/usr/sbin:/usr/local/bin:$PATH"
 [[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
