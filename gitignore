@@ -12,6 +12,7 @@
 .idea
 .cache
 .bash*
+*.id_rsa
 
 /venv
 /py
