@@ -1,5 +1,8 @@
 startup_message off
 autodetach on
+defutf8 on
+
+defscrollback 32000
 
 termcapinfo xterm* ti@:te@
 
