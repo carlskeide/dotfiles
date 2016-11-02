@@ -5,11 +5,11 @@ c = get_config()
 c.InteractiveShellApp.exec_PYTHONSTARTUP = False
 
 c.InteractiveShellApp.exec_lines = [
-    'import sys, logging, json, time',
+    'import logging, sys, os, json, time, types, collections',
     'from datetime import datetime, timedelta',
     'from decimal import Decimal',
     'from pprint import pprint as pp',
-    'logging.basicConfig(level=logging.DEBUG)',
+    'from IPython.utils.text import SList',
 ]
 
 c.InteractiveShell.autocall = True
