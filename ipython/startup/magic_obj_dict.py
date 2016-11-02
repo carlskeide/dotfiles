@@ -8,6 +8,6 @@ def od(line):
     if line:
         pp(eval(line).__dict__)
     else:
-        print "No object supplied."
+        print("No object supplied.")
 
 del od
