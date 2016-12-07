@@ -31,3 +31,5 @@ alias git-commit="git commit -m"
 
 alias vup="vagrant up --provider=docker"
 alias vssh="vagrant ssh"
+
+alias https='http --default-scheme=https'
