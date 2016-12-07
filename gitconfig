@@ -7,6 +7,7 @@
 
 [push]
     default = simple
+    followTags = true
 
 [core]
 	excludesfile = ~/.gitignore
@@ -42,10 +43,13 @@
     st = status
     co = checkout
     pr = pull --rebase
+    c = commit -av
     ca = !git add -A && git commit -av
     d = diff --patch-with-stat
     lg = log --graph --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=relative
+    lgg = log --decorate --graph --all
     r = remote -v
 
-    unstage = reset HEAD
+    del = reset HEAD
+    rev = checkout HEAD --
     #uncommit = reset HEAD^
