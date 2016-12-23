@@ -26,10 +26,9 @@ alias dmount="mount | grep -v docker"
 alias workon="pushd . &>/dev/null && workon"
 alias workoff="deactivate"
 
-alias git-log="git log --graph --oneline --decorate"
-alias git-commit="git commit -m"
-
 alias vup="vagrant up --provider=docker"
 alias vssh="vagrant ssh"
 
 alias https='http --default-scheme=https'
+
+alias ffs="sudo !!"
