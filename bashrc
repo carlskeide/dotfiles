@@ -1,6 +1,7 @@
 ####### Config #######
 PROMPT_VIRTUALENV=1
 PROMPT_GITSTATUS=1
+PROMPT_ONELINE=1
 ##### END config #####
 
 
@@ -82,7 +83,7 @@ function prompt_cmd_git {
     GIT_STATUS="$(${GIT_STATUS_HELPER})"
 
     [[ -n "${GIT_STATUS}" ]] \
-    && echo "${COLOR_NONE}:${GIT_STATUS} "
+    && echo "${COLOR_NONE}:${GIT_STATUS}"
 }
 
 function prompt_cmd_venv {
@@ -106,14 +107,19 @@ function prompt_cmd {
     STATUS_VENV="$(prompt_cmd_venv)"
     STATUS_GIT="$(prompt_cmd_git)"
 
+    [[ "PROMPT_ONELINE" -eq 1 ]] \
+    && SEPARATOR=' ' \
+    || SEPARATOR='\n'
+
     PS1="${TITLEBAR}\
 ${CLR_USER}\u\
 ${COLOR_NONE}@\
 ${CLR_HOST}\h\
-${COLOR_NONE}:\
-${COLOR_CYAN}\w\
 ${STATUS_VENV}\
 ${STATUS_GIT}\
+${COLOR_NONE}:\
+${COLOR_CYAN}\w\
+${SEPARATOR}\
 ${CLR_CURSOR}\\$ \
 ${COLOR_NONE}"
 
