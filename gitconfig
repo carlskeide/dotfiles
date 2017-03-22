@@ -1,55 +1,56 @@
 [user]
-	name = Carl Skeide
-	email = dev@null.com
+	mame = Carl Skeide
+	email = carl.skeide@dev.null
 
 [github]
-    user = carlskeide
+	user = carlskeide
 
 [push]
-    default = simple
-    followTags = true
+	default = simple
+	followTags = true
 
 [core]
 	excludesfile = ~/.gitignore
 
 [diff]
-    # Detect copies as well as renames
-    renames = copies
+	# Detect copies as well as renames
+	renames = copies
 
 [merge]
-    log = true
+	log = true
 
 [color]
-    ui = auto
+	ui = auto
 
 [color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
+	current = yellow reverse
+	local = yellow
+	remote = green
 
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red
-    new = green
+	meta = yellow bold
+	frag = magenta bold
+	old = red
+	new = green
 
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 
 [alias]
-    s = status -s
-    st = status
-    co = checkout
-    pr = pull --rebase
-    c = commit -av
-    ca = !git add -A && git commit -av
-    d = diff --patch-with-stat
-    lg = log --graph --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=relative
-    lgg = log --decorate --graph --all
-    r = remote -v
+	s = status -s
+	st = status
+	co = checkout
+	pr = pull --rebase
+	pp = !git fetch --prune && git pull
+	c = commit -av
+	ca = !git add -A && git commit -av
+	d = diff --patch-with-stat
+	lg = log --graph --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=relative
+	lgg = log --decorate --graph --all
+	r = remote -v
 
-    del = reset HEAD
-    rev = checkout HEAD --
-    #uncommit = reset HEAD^
+	del = reset HEAD
+	rev = checkout HEAD --
+	#uncommit = reset HEAD^
