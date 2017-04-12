@@ -15,9 +15,18 @@
 [diff]
 	# Detect copies as well as renames
 	renames = copies
+	tool = sublimerge
+
+[difftool "sublimerge"]
+	cmd = subl3 -n --wait \"$REMOTE\" \"$LOCAL\" --command \"sublimerge_diff_views {\\\"left_read_only\\\": true, \\\"right_read_only\\\": true}\"
 
 [merge]
 	log = true
+	tool = sublimerge
+
+[mergetool "sublimerge"]
+	cmd = subl3 -n --wait \"$REMOTE\" \"$BASE\" \"$LOCAL\" \"$MERGED\" --command \"sublimerge_diff_views\"
+	trustExitCode = false
 
 [color]
 	ui = auto
@@ -43,7 +52,7 @@
 	st = status
 	co = checkout
 	pr = pull --rebase
-	pp = !git fetch --prune && git pull
+	fp = !git fetch --prune && git pull
 	c = commit -av
 	ca = !git add -A && git commit -av
 	d = diff --patch-with-stat
