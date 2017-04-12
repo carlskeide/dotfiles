@@ -1,4 +1,5 @@
 ####### Config #######
+PROMPT_HOST=0
 PROMPT_VIRTUALENV=1
 PROMPT_GITSTATUS=1
 PROMPT_ONELINE=1
@@ -90,7 +91,7 @@ function prompt_cmd_venv {
     [[ $PROMPT_VIRTUALENV -eq 1 ]] || exit 0
 
     [[ -n "${VIRTUAL_ENV}" ]] \
-    && echo "${COLOR_NONE}:${COLOR_WHITE}${VIRTUAL_ENV##*/}${COLOR_NONE}"
+    && echo "${COLOR_NONE}:${COLOR_BLUE}${VIRTUAL_ENV##*/}${COLOR_NONE}"
 }
 
 function prompt_cmd {
@@ -104,6 +105,10 @@ function prompt_cmd {
     && CLR_USER="${COLOR_RED}" \
     || CLR_USER="${COLOR_GREEN}"
 
+    [[ "${PROMPT_HOST}" -eq 1 ]] \
+    && STATUS_HOST="${COLOR_NONE}@${CLR_HOST}\h" \
+    || STATUS_HOST=""
+
     STATUS_VENV="$(prompt_cmd_venv)"
     STATUS_GIT="$(prompt_cmd_git)"
 
@@ -111,17 +116,18 @@ function prompt_cmd {
     && SEPARATOR=' ' \
     || SEPARATOR='\n'
 
-    PS1="${TITLEBAR}\
+    PS1="\
+${TITLEBAR}\
 ${CLR_USER}\u\
-${COLOR_NONE}@\
-${CLR_HOST}\h\
+${STATUS_HOST}\
 ${STATUS_VENV}\
 ${STATUS_GIT}\
 ${COLOR_NONE}:\
 ${COLOR_CYAN}\w\
 ${SEPARATOR}\
 ${CLR_CURSOR}\\$ \
-${COLOR_NONE}"
+${COLOR_NONE}\
+"
 
 }
 
