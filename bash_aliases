@@ -31,7 +31,7 @@ alias vssh="vagrant ssh"
 
 alias https='http --default-scheme=https'
 
-alias ffs="sudo !!"
+alias ffs="fc -ln -1 | xargs sudo -s"
 
 # Gentoo-specific
 alias emerge="sudo emerge -uav"
