@@ -132,3 +132,5 @@ ${COLOR_NONE}\
 }
 
 PROMPT_COMMAND=prompt_cmd
+
+FAB_USER="carl.skeide"
