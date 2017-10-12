@@ -26,9 +26,6 @@ alias dmount="mount | grep -v docker"
 alias workon="pushd . &>/dev/null && workon"
 alias workoff="deactivate"
 
-alias vup="vagrant up --provider=docker"
-alias vssh="vagrant ssh"
-
 alias https='http --default-scheme=https'
 
 alias ffs="fc -ln -1 | xargs sudo -s"
@@ -37,3 +34,4 @@ alias ffs="fc -ln -1 | xargs sudo -s"
 alias emerge="sudo emerge -uav"
 alias etc-update="sudo etc-update"
 alias eselect="sudo eselect"
+
