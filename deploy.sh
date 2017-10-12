@@ -3,7 +3,7 @@
 cd ~
 
 # Literally dotfiles
-hitlist="~/dotfiles/screenrc"
+hitlist="~/dotfiles/screenrc ~/dotfiles/tmux.conf"
 for file in $hitlist ~/dotfiles/bash*; do echo rm -f "~/.${file##*/}"; echo ln -s "$file" "~/.${file##*/}"; done
 echo ": > ~/.hushlogin"
 echo "cat dotfiles/virtualenvs.postdeactivate >>.virtualenvs/postdeactivate"
