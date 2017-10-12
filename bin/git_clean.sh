@@ -11,8 +11,8 @@ if [[ -n "$BRANCHES" ]]; then
     if [[ "$input" =~ ^[Yy] ]]; then
         echo "$BRANCHES" | while read branch; do
             echo "$branch"
-            echo git branch -d "$branch"
-            echo git push --delete origin "$branch"
+            git branch -d "$branch"
+            git push --delete origin "$branch"
         done
     else
         echo "Aborting"
