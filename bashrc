@@ -1,10 +1,12 @@
 ####### Config #######
-PROMPT_HOST=0
+PROMPT_ONELINE=1
+
+PROMPT_HOST=1
+HOST_COLOR="green"
+
 PROMPT_VIRTUALENV=1
 PROMPT_GITSTATUS=1
-PROMPT_ONELINE=1
 ##### END config #####
-
 
 ## Pre-flight checks
 # Test for an interactive shell.
@@ -24,20 +26,21 @@ shopt -s checkwinsize
 shopt -s globstar
 
 ## Internal variables
-# Prompt colors
-COLOR_BLACK="\[\e[30;49m\]"
-COLOR_RED="\[\e[31;49m\]"
-COLOR_GREEN="\[\e[32;49m\]"
-COLOR_YELLOW="\[\e[33;49m\]"
-COLOR_BLUE="\[\e[34;49m\]"
-COLOR_MAGENTA="\[\e[35;49m\]"
-COLOR_CYAN="\[\e[36;49m\]"
-COLOR_WHITE="\[\e[37;49m\]"
-COLOR_NONE="\[\e[0m\]"
+# Available colors
+declare -A colors=(
+    ["black"]="\[\e[30;49m\]"
+    ["red"]="\[\e[31;49m\]"
+    ["green"]="\[\e[32;49m\]"
+    ["yellow"]="\[\e[33;49m\]"
+    ["blue"]="\[\e[34;49m\]"
+    ["magenta"]="\[\e[35;49m\]"
+    ["cyan"]="\[\e[36;49m\]"
+    ["white"]="\[\e[37;49m\]"
+    ["none"]="\[\e[0m\]"
+)
 
 # External helpers
 GIT_STATUS_HELPER=~/dotfiles/sbp_git_status.sh
-
 
 ## Environment
 export DISPLAY=:0
@@ -53,29 +56,24 @@ export HISTFILESIZE=10000
 export PATH="/sbin:/usr/sbin:/usr/local/bin:$PATH"
 [[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
 
-
 ## User Features
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 [[ -f ~/venv/bin/activate ]] && . ~/venv/bin/activate
 [[ -f ~/.docker-machine ]] && eval "$(docker-machine env $(cat ~/.docker-machine))"
 
+# Use the system-wide host color, if avaiable.
+[[ -f /etc/host_color ]] && HOST_COLOR="$(cat /etc/host_color)"
+
 if [[ "$TERM" != "dumb" ]] && which dircolors >/dev/null ; then
     [[ -r ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
-
 
 ## Shell features
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
 [[ -f /usr/bin/virtualenvwrapper.sh ]] && . /usr/bin/virtualenvwrapper.sh
 
-
 ## GUI features
 [[ $TERM == 'xterm' ]] && TITLEBAR="\[\e]2;\u@\h:\w\a\]" || TITLEBAR=""
-
-
-# Use the system-wide host color if avaiable, default to green.
-[[ -f /etc/host_color ]] && . /etc/host_color || CLR_HOST="$COLOR_GREEN"
-
 
 ## logic
 function prompt_cmd_git {
@@ -84,29 +82,29 @@ function prompt_cmd_git {
     GIT_STATUS="$(${GIT_STATUS_HELPER})"
 
     [[ -n "${GIT_STATUS}" ]] \
-    && echo "${COLOR_NONE}:${GIT_STATUS}"
+    && echo "${colors[none]}:${GIT_STATUS}"
 }
 
 function prompt_cmd_venv {
     [[ $PROMPT_VIRTUALENV -eq 1 ]] || exit 0
 
     [[ -n "${VIRTUAL_ENV}" ]] \
-    && echo "${COLOR_NONE}:${COLOR_BLUE}${VIRTUAL_ENV##*/}${COLOR_NONE}"
+    && echo "${colors[none]}:${colors[blue]}${VIRTUAL_ENV##*/}${colors[none]}"
 }
 
 function prompt_cmd {
     # Cursor color is determined by the exit status of the last command.
     [[ "$?" -eq 0 ]] \
-    && CLR_CURSOR="${COLOR_GREEN}" \
-    || CLR_CURSOR="${COLOR_RED}"
+    && CLR_CURSOR="${colors[green]}" \
+    || CLR_CURSOR="${colors[red]}"
 
     # User color is determined by the current UID, root=red
     [[ "${UID}" -eq 0 ]] \
-    && CLR_USER="${COLOR_RED}" \
-    || CLR_USER="${COLOR_GREEN}"
+    && CLR_USER="${colors[red]}" \
+    || CLR_USER="${colors[green]}"
 
     [[ "${PROMPT_HOST}" -eq 1 ]] \
-    && STATUS_HOST="${COLOR_NONE}@${CLR_HOST}\h" \
+    && STATUS_HOST="${colors[none]}@${colors[${HOST_COLOR}]}\h" \
     || STATUS_HOST=""
 
     STATUS_VENV="$(prompt_cmd_venv)"
@@ -122,11 +120,11 @@ ${CLR_USER}\u\
 ${STATUS_HOST}\
 ${STATUS_VENV}\
 ${STATUS_GIT}\
-${COLOR_NONE}:\
-${COLOR_CYAN}\w\
+${colors[none]}:\
+${colors[cyan]}\w\
 ${SEPARATOR}\
 ${CLR_CURSOR}\\$ \
-${COLOR_NONE}\
+${colors[none]}\
 "
 
 }
