@@ -6,6 +6,7 @@ HOST_COLOR="green"
 
 PROMPT_VIRTUALENV=1
 PROMPT_GITSTATUS=1
+PROMPT_JOBS=1
 ##### END config #####
 
 ## Pre-flight checks
@@ -92,6 +93,14 @@ function prompt_cmd_venv {
     && echo "${colors[none]}:${colors[blue]}${VIRTUAL_ENV##*/}${colors[none]}"
 }
 
+function prompt_cmd_jobs {
+    [[ $PROMPT_JOBS -eq 1 ]] || exit 0
+
+    NUM_JOBS=$(jobs | wc -l)
+    [[ "$NUM_JOBS" -gt 0 ]] \
+    && echo "${colors[none]}:${colors[yellow]}&${NUM_JOBS}${colors[none]}"
+}
+
 function prompt_cmd {
     # Cursor color is determined by the exit status of the last command.
     [[ "$?" -eq 0 ]] \
@@ -109,6 +118,7 @@ function prompt_cmd {
 
     STATUS_VENV="$(prompt_cmd_venv)"
     STATUS_GIT="$(prompt_cmd_git)"
+    STATUS_JOBS="$(prompt_cmd_jobs)"
 
     [[ "PROMPT_ONELINE" -eq 1 ]] \
     && SEPARATOR=' ' \
@@ -122,6 +132,7 @@ ${STATUS_VENV}\
 ${STATUS_GIT}\
 ${colors[none]}:\
 ${colors[cyan]}\w\
+${STATUS_JOBS}\
 ${SEPARATOR}\
 ${CLR_CURSOR}\\$ \
 ${colors[none]}\
