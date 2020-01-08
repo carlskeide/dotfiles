@@ -1,0 +1,12 @@
+[
+    {
+        "class": "sidebar_label",
+        "font.size": 10
+    },
+    {
+        "class": "quick_panel_label",
+        "font.size": 12
+    },
+]
+
+
