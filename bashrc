@@ -57,10 +57,10 @@ export HISTFILESIZE=10000
 export PATH="/sbin:/usr/sbin:/usr/local/bin:$PATH"
 [[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
 
+[[ -f "$HOME/.hosts" ]] && export HOSTFILE="$HOME/.hosts"
+
 ## User Features
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
-[[ -f ~/venv/bin/activate ]] && . ~/venv/bin/activate
-[[ -f ~/.docker-machine ]] && eval "$(docker-machine env $(cat ~/.docker-machine))"
 
 # Use the system-wide host color, if avaiable.
 [[ -f /etc/host_color ]] && HOST_COLOR="$(cat /etc/host_color)"
@@ -72,9 +72,6 @@ fi
 ## Shell features
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
 [[ -f /usr/bin/virtualenvwrapper.sh ]] && . /usr/bin/virtualenvwrapper.sh
-
-## GUI features
-[[ $TERM == 'xterm' ]] && TITLEBAR="\[\e]2;\u@\h:\w\a\]" || TITLEBAR=""
 
 ## logic
 function prompt_cmd_git {
@@ -102,6 +99,7 @@ function prompt_cmd_jobs {
 }
 
 function prompt_cmd {
+
     # Cursor color is determined by the exit status of the last command.
     [[ "$?" -eq 0 ]] \
     && CLR_CURSOR="${colors[green]}" \
@@ -124,6 +122,9 @@ function prompt_cmd {
     && SEPARATOR=' ' \
     || SEPARATOR='\n'
 
+    ## GUI features
+    [[ "$TERM" =~ ^xterm ]] && TITLEBAR="\[\e]0;\u@\h: \w\a\]" || TITLEBAR=""
+
     PS1="\
 ${TITLEBAR}\
 ${CLR_USER}\u\
@@ -137,9 +138,6 @@ ${SEPARATOR}\
 ${CLR_CURSOR}\\$ \
 ${colors[none]}\
 "
-
 }
 
 PROMPT_COMMAND=prompt_cmd
-
-export FAB_USER="carl.skeide"
