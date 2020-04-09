@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+## Config
+declare script_name
+script_name="$(basename "${0}")"
+echo -ne "\e]0;${script_name}\a"
+
+function usage() {
+    echo "Usage: ${script_name} HOST FILE"
+    exit 1
+}
+
+## Flags
+while getopts ":h" o; do
+    case "${o}" in
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+## Args
+declare HOST="$1"
+declare FILENAME="$2"
+[[ -z "$HOST" || -z "$FILENAME" ]] && usage
+
+# Main
+ssh "$HOST" tail -F "$FILENAME" 2>/dev/null
