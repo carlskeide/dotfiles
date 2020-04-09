@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+[[ -z "$1" ]] && echo "no target provideed" && exit 2
+
+declare retval=0
+for target in "${@}"; do
+    echo -ne "${target} "
+
+    if ping -c1 -w1 "$target" &>/dev/null; then
+        echo "up"
+    else
+        echo "down"
+        retval=1
+    fi
+
+done
+
+exit "$retval"
