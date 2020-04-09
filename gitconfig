@@ -44,22 +44,25 @@
 	st = status
 	co = checkout
 	a = add
-	fp = !git fetch --all --prune && git pull
-	pm = pull --rebase upstream master
-	mm = merge upstream/master
-	md = merge upstream/develop
-	po = push origin
+    mm = merge upstream/master
+    md = merge upstream/develop
+    po = push origin
 	c = commit -av
 	d = diff --patch-with-stat
 	lg = log --graph --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=relative
 	lgg = log --decorate --graph --all
 	r = remote -v
-	g = grep
+    g = grep
 
 	del = reset HEAD
 	rev = checkout HEAD --
-	sync-master = !git switch master && git fp && git mm && git po
-	sync-dev = !git switch develop && git fp && git md && git po
+
+	sync = !git fetch --all --prune && git pull
+    sync-master = !git switch master && git fp && git mm && git po
+    sync-dev = !git switch develop && git fp && git md && git po
+
+	rsync = !git-sync-recursive
+	bump = !git-bump-version
 
 	switch = !legit switch
 	publish = !legit publish

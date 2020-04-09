@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+set -o pipefail
+
+[[ -d "./.git" ]] || { echo "This doesn't seem to be git repository, aborting" && exit 1; }
+
+echo "Ensuring repository is up-to-date."
+git fetch
+
+old_tag=$(git tag -l --sort=-version:refname | head -n1)
+keep_atoms=${old_tag%.*}
+last_atom=${old_tag##*.}
+[[ -z "$keep_atoms" || -z "$last_atom" ]] && echo "Coulnd't extract version from: ${old_tag}" && exit 2
+
+echo "Latest tag is: ${old_tag}"
+new_tag="${keep_atoms}.$(( ${last_atom} + 1 ))"
+
+echo -ne "Create ${new_tag}? [y/N]: "
+read resp
+[[ "$resp" =~ ^[Yy](es)?$ ]] || { echo "User abort!" && exit 1; }
+
+git tag -a -m "bump version" "$new_tag"
+echo "Created tag: ${new_tag}"
+
+echo -ne "Push tag? [Y/n]: "
+read resp
+[[ -z "$resp" || "$resp" =~ ^[Yy](es)?$ ]] || { echo "User abort!" && exit 1; }
+
+git push --follow-tags

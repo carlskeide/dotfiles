@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+repos="$(find . -mindepth 1 -maxdepth 2 -type d -iname .git)"
+echo "Syncing $(echo "$repos" | wc -l) repositories..."
+
+while read repo; do
+    {
+        echo "Syncing repo: ${repo}"
+        (cd "$(dirname "$repo")" && git fetch --all && git pull) || echo "Sync failed!"
+    } &
+done <<<"$repos"
+
+echo "Waiting for jobs to complete"
+wait && exit 0
