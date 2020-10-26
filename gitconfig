@@ -1,72 +1,75 @@
 [user]
-	email = carl.skeide@sony.com
-	name = Carl Skeide
+    email = carl@fake.email
+    name = Carl Skeide
 
 [github]
-	user = carlskeide
+    user = carlskeide
 
 [push]
-	default = simple
-	followTags = true
+    default = simple
+    followTags = true
 
 [core]
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
 
 [diff]
-	# Detect copies as well as renames
-	renames = copies
+    # Detect copies as well as renames
+    renames = copies
+
+[pull]
+    ff = only
 
 [merge]
-	log = true
-	tool = sublimerge
+    log = true
+    # tool = sublimerge
 
 [color]
-	ui = auto
+    ui = auto
 
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+    current = yellow reverse
+    local = yellow
+    remote = green
 
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red
-	new = green
+    meta = yellow bold
+    frag = magenta bold
+    old = red
+    new = green
 
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+    added = yellow
+    changed = green
+    untracked = cyan
 
 [alias]
-	s = status -s
-	st = status
-	co = checkout
-	a = add
-    mm = merge upstream/master
-    md = merge upstream/develop
-    po = push origin
-	c = commit -av
-	d = diff --patch-with-stat
-	lg = log --graph --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=relative
-	lgg = log --decorate --graph --all
-	r = remote -v
+    a = add
+    c = commit -av
+    co = checkout
+    d = diff --patch-with-stat
     g = grep
+    r = remote -v
+    s = status -s
+    st = status
 
-	del = reset HEAD
-	rev = checkout HEAD --
+    lg = log --graph --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=relative
+    lgg = log --decorate --graph --all
 
-	sync = !git fetch --all --prune && git pull
-    sync-master = !git switch master && git fp && git mm && git po
-    sync-dev = !git switch develop && git fp && git md && git po
+    del = reset HEAD
+    rev = checkout HEAD --
 
-	rsync = !git-sync-recursive
-	bump = !git-bump-version
+    merge-master = merge upstream/master
+    merge-dev = merge upstream/develop
 
-	switch = !legit switch
-	publish = !legit publish
-	unpublish = !legit unpublish
-	undo = !legit undo
-	branches = !legit branches
+    sync = !git fetch --all --prune && git pull
+    sync-master = !git switch master && git sync && git merge-master && git push origin
+    sync-dev = !git switch develop && git sync && git merge-dev && git push origin
 
+    rsync = !git-sync-recursive
+    bump = !git-bump-version
+
+    switch = !legit switch
+    publish = !legit publish
+    unpublish = !legit unpublish
+    undo = !legit undo
+    branches = !legit branches
