@@ -20,6 +20,7 @@ c.InteractiveShellApp.exec_lines = [
     [
         'from datetime import timezone',
         'from statistics import mean, median',
+        'from importlib import reload'
     ] if six.PY3 else [
         'import pytz',
     ]
