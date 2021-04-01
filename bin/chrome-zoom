@@ -1,0 +1,50 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+function usage() {
+    echo "Usage: ${script_name} big|small"
+    exit 1
+}
+
+## Flags
+while getopts ":h" o; do
+    case "${o}" in
+        h)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+# Config
+declare config_file=~/.config/google-chrome/Default/Preferences
+declare config_key=".partition.default_zoom_level.x"
+
+declare -A zoom_levels=(
+    [big]="0.5227586988632231"  # 110%
+    [medium]="-0.5778829311823857"  # 90%
+    [small]="-1.2239010857415447"  # 80%
+)
+
+# Args
+ZOOM="$1"
+[[ -z "$ZOOM" ]] && usage
+
+zoom_level="${zoom_levels[${ZOOM,,}]}"
+[[ -z "$zoom_level" ]] && echo "Unknown zoom level: ${ZOOM}" && exit 1
+
+# Main
+if [[ -z "$(pgrep -x chrome)" ]]; then
+    echo "Changing default zoom level to ${zoom_level}"
+    cp "$config_file" "${config_file}.bak"
+    jq "${config_key} = ${zoom_level}" "${config_file}.bak" > "$config_file"
+
+    echo "Done"
+    exit 0
+
+else
+    echo "will not change settings while Chrome is running!"
+    exit 2
+
+fi
