@@ -17,11 +17,11 @@ alias c="clear"
 
 alias psg="ps aux | grep"
 alias rcopy="rsync -vahP"
+alias nocomment="grep -vEe '^\s*(#|$)'"
 
 alias dk="docker"
 alias dkco="docker-compose"
 alias dkma="docker-machine"
-alias dmount="mount | grep -v docker"
 
 alias workon="pushd . &>/dev/null && workon"
 alias workoff="deactivate"

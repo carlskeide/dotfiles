@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+## Config
+declare script_name
+script_name="$(basename "${0}")"
+
+function usage() {
+    echo "Usage: ${script_name} PATTERN FILE"
+    exit 1
+}
+
+## Flags
+while getopts ":h" o; do
+    case "${o}" in
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+## Args
+declare PATTERN="$1"
+[[ -z "$PATTERN" ]] && usage
+
+shift 1
+declare FILES="$@"
+
+# Main
+grep -Ee "${PATTERN}|$" --color=always $FILES
