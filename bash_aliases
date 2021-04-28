@@ -30,6 +30,8 @@ alias https='http --default-scheme=https'
 
 alias ffs="fc -ln -1 | xargs sudo -s"
 
+alias crt="openssl x509 -noout -text"
+
 # Gentoo-specific
 alias emerge="sudo emerge -uav"
 alias etc-update="sudo etc-update"
