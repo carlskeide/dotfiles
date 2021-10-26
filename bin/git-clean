@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BRANCHES="$(git branch --merged | egrep -v '(^\*|master|staging|dev)')"
+BRANCHES="$(git branch --merged | egrep -v '(^\*|main|master|staging|dev)')"
 
 if [[ -n "$BRANCHES" ]]; then
     echo "About to delete:"
