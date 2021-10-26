@@ -1,0 +1,40 @@
+#!/bin/bash
+set -eo pipefail
+
+function usage() {
+    echo "Usage: ${script_name} COLOR MESSAGE"
+    exit 1
+}
+
+declare noformat="\e[0m"
+declare -A colors=(
+    ["black"]="\e[30;49m"
+    ["red"]="\e[31;49m"
+    ["green"]="\e[32;49m"
+    ["yellow"]="\e[33;49m"
+    ["blue"]="\e[34;49m"
+    ["magenta"]="\e[35;49m"
+    ["cyan"]="\e[36;49m"
+    ["white"]="\e[37;49m"
+)
+
+declare flags=""
+
+while getopts ":nh" o; do
+    case "${o}" in
+        n)
+            flags="-n "
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+[[ -z "$2" ]] && usage
+
+declare color="${colors[${1,,}]}"
+[[ -z "$color" ]] && echo "Valid colors: ${!colors[@]}" && exit 2
+
+echo -e ${flags} "${color}${2}${noformat}"
