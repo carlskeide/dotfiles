@@ -23,9 +23,6 @@ alias dk="docker"
 alias dkco="docker-compose"
 alias dkma="docker-machine"
 
-alias workon="pushd . &>/dev/null && workon"
-alias workoff="deactivate"
-
 alias https='http --default-scheme=https'
 
 alias ffs="fc -ln -1 | xargs sudo -s"
@@ -37,3 +34,18 @@ alias emerge="sudo emerge -uav"
 alias etc-update="sudo etc-update"
 alias eselect="sudo eselect"
 
+### pyenv / virtualenvwrapper
+#alias workon="pushd . &>/dev/null && workon"
+#alias workoff="deactivate && popd &>/dev/null"
+
+function workon {
+    pyenv activate ${@}
+
+    [[ -f "${VIRTUAL_ENV}/.project" ]] && pushd "$(cat "${VIRTUAL_ENV}/.project")" >/dev/null;
+}
+
+function workoff {
+    pyenv deactivate
+
+    popd >/dev/null
+}

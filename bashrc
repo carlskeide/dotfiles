@@ -71,10 +71,17 @@ fi
 
 ## Shell features
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
-[[ -f /usr/bin/virtualenvwrapper.sh ]] && . /usr/bin/virtualenvwrapper.sh
+#[[ -f /usr/bin/virtualenvwrapper.sh ]] && . /usr/bin/virtualenvwrapper.sh
+if [[ -f /sbin/pyenv ]]; then
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+
+    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+fi
 
 ## logic
-function prompt_cmd_git {
+function _prompt_cmd_git {
     [[ -x "$GIT_STATUS_HELPER" && $PROMPT_GITSTATUS -eq 1 ]] || exit 0
 
     GIT_STATUS="$(${GIT_STATUS_HELPER})"
@@ -83,14 +90,14 @@ function prompt_cmd_git {
     && echo "${colors[none]}:${GIT_STATUS}"
 }
 
-function prompt_cmd_venv {
+function _prompt_cmd_venv {
     [[ $PROMPT_VIRTUALENV -eq 1 ]] || exit 0
 
     [[ -n "${VIRTUAL_ENV}" ]] \
     && echo "${colors[none]}:${colors[blue]}${VIRTUAL_ENV##*/}${colors[none]}"
 }
 
-function prompt_cmd_jobs {
+function _prompt_cmd_jobs {
     [[ $PROMPT_JOBS -eq 1 ]] || exit 0
 
     NUM_JOBS=$(jobs | wc -l)
@@ -114,9 +121,9 @@ function prompt_cmd {
     && STATUS_HOST="${colors[none]}@${colors[${HOST_COLOR}]}\h" \
     || STATUS_HOST=""
 
-    STATUS_VENV="$(prompt_cmd_venv)"
-    STATUS_GIT="$(prompt_cmd_git)"
-    STATUS_JOBS="$(prompt_cmd_jobs)"
+    STATUS_VENV="$(_prompt_cmd_venv)"
+    STATUS_GIT="$(_prompt_cmd_git)"
+    STATUS_JOBS="$(_prompt_cmd_jobs)"
 
     [[ "PROMPT_ONELINE" -eq 1 ]] \
     && SEPARATOR=' ' \
