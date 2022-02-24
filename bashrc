@@ -16,18 +16,30 @@ if [[ $- != *i* ]] ; then
         return
 fi
 
+## Bash History settings
+export HISTCONTROL=ignoreboth
+export HISTIGNORE='ls:ll:l:bg:fg:history'
+
+export HISTTIMEFORMAT='%F %T '
+
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+
 # append to the history file, don't overwrite it
 shopt -s histappend
+
 # reformat multiline commands
 shopt -s cmdhist
+
+## Bash shell features
 # check the window size after each command
 shopt -s checkwinsize
+
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
 
 ## Internal variables
-# Available colors
 declare -A colors=(
     ["black"]="\[\e[30;49m\]"
     ["red"]="\[\e[31;49m\]"
@@ -43,41 +55,11 @@ declare -A colors=(
 # External helpers
 GIT_STATUS_HELPER=~/dotfiles/sbp_git_status.sh
 
-## Environment
-export DISPLAY=:0
-export EDITOR=nano
-
-export HISTCONTROL=ignoreboth
-export HISTIGNORE='ls:ll:l:bg:fg:history'
-export HISTTIMEFORMAT='%F %T '
-
-export HISTSIZE=10000
-export HISTFILESIZE=10000
-
-export PATH="/sbin:/usr/sbin:/usr/local/bin:$PATH"
-[[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
-
-[[ -f "$HOME/.hosts" ]] && export HOSTFILE="$HOME/.hosts"
-
-## User Features
-[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
-
 # Use the system-wide host color, if avaiable.
 [[ -f /etc/host_color ]] && HOST_COLOR="$(cat /etc/host_color)"
 
 if [[ "$TERM" != "dumb" ]] && which dircolors >/dev/null ; then
     [[ -r ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-fi
-
-## Shell features
-[[ -f /etc/bash_completion ]] && . /etc/bash_completion
-#[[ -f /usr/bin/virtualenvwrapper.sh ]] && . /usr/bin/virtualenvwrapper.sh
-if [[ -f /sbin/pyenv ]]; then
-    eval "$(pyenv init --path)"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-
-    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 fi
 
 ## logic
@@ -130,7 +112,7 @@ function prompt_cmd {
     || SEPARATOR='\n'
 
     ## GUI features
-    [[ "$TERM" =~ ^xterm ]] && TITLEBAR="\[\e]0;\u@\h: \w\a\]" || TITLEBAR=""
+    [[ "$TERM" =~ ^xterm ]] && TITLEBAR="\[\e]0;\h: \w\a\]" || TITLEBAR=""
 
     PS1="\
 ${TITLEBAR}\
