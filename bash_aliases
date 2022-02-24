@@ -29,23 +29,26 @@ alias ffs="fc -ln -1 | xargs sudo -s"
 
 alias crt="openssl x509 -noout -text"
 
-# Gentoo-specific
-alias emerge="sudo emerge -uav"
-alias etc-update="sudo etc-update"
-alias eselect="sudo eselect"
+## pyenv
+function cdproject {
+    [[ -z "$VIRTUAL_ENV" ]] && echo "No virtualenv active" && return
 
-### pyenv / virtualenvwrapper
-#alias workon="pushd . &>/dev/null && workon"
-#alias workoff="deactivate && popd &>/dev/null"
+    [[ -f "${VIRTUAL_ENV}/.project" ]] && cd $(cat "${VIRTUAL_ENV}/.project");
+
+}
 
 function workon {
     pyenv activate ${@}
 
     [[ -f "${VIRTUAL_ENV}/.project" ]] && pushd "$(cat "${VIRTUAL_ENV}/.project")" >/dev/null;
+
 }
 
 function workoff {
+    [[ -z "$VIRTUAL_ENV" ]] && echo "No virtualenv active" && return
+
+    [[ -f "${VIRTUAL_ENV}/.project" ]] && popd >/dev/null
+
     pyenv deactivate
 
-    popd >/dev/null
 }

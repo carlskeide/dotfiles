@@ -1,0 +1,15 @@
+_workon_tab_complete () {
+    local virtual_envs
+
+    if [ "${#COMP_WORDS[@]}" != "2" ]; then
+        return
+    fi
+
+    virtual_envs=$(find ~/.pyenv/versions -maxdepth 1 -type l -printf "%P\n")
+
+
+    COMPREPLY=($(compgen -W "${virtual_envs}" -- "${COMP_WORDS[1]}"))
+    return 0
+}
+
+complete -F _workon_tab_complete workon
