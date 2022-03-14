@@ -3,8 +3,6 @@
 # This file is sourced by bash for login shells.  The following line
 # runs your .bashrc and is recommended by the bash info pages.
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-
-## User Features
 [[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
 if [[ -f ~/.env ]]; then
@@ -13,12 +11,6 @@ if [[ -f ~/.env ]]; then
     done < ~/.env
     unset l
 fi
-
-export PATH="/sbin:/usr/sbin:/usr/local/bin:$PATH"
-
-[[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
-[[ -f "$HOME/.hosts" ]] && export HOSTFILE="$HOME/.hosts"
-
 
 ## Python stuff
 # Basic user virtualenv
@@ -36,6 +28,10 @@ if [[ -f ~/.pyenv/bin/pyenv ]]; then
 
     eval "$(~/.pyenv/bin/pyenv virtualenv-init -)"
 fi
+
+# User overrides
+[[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
+[[ -f "$HOME/.hosts" ]] && export HOSTFILE="$HOME/.hosts"
 
 ## Workaround for weird system profiles
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
