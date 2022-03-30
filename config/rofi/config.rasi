@@ -2,15 +2,5 @@ configuration {
 	modi: "drun,window";
 	combi-modi: "drun,window,ssh";
 	font: "ubuntu 14";
-
-  timeout {
-      action: "kb-cancel";
-      delay:  0;
-  }
-
-  filebrowser {
-      directories-first: true;
-      sorting-method:    "name";
-  }
 }
 @theme "solarized"
