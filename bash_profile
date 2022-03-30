@@ -28,6 +28,8 @@ if [[ -f ~/.pyenv/bin/pyenv ]]; then
 
     eval "$(~/.pyenv/bin/pyenv virtualenv-init -)"
 fi
+# Cargo / Rustup
+[[ -d "$HOME/.cargo" ]] && source "$HOME/.cargo/env"
 
 # User overrides
 [[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
