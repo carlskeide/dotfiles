@@ -9,10 +9,11 @@ c.InteractiveShellApp.exec_PYTHONSTARTUP = False
 c.InteractiveShellApp.exec_lines = [
     'import logging, sys, os, json, types',
     'from os import path',
-    'from time import time',
+    'from time import time, mktime',
     'from datetime import date, datetime, timedelta',
-    'from collections import defaultdict, OrderedDict, deque',
-    'from itertools import chain',
+    'from collections import Counter, defaultdict, deque, namedtuple, OrderedDict',
+    'from itertools import chain, combinations, permutations, product, cycle, repeat',
+    'from functools import cache, partial, reduce, wraps',
     'from decimal import Decimal',
     'from pprint import pprint as pp',
     'from IPython.utils.text import SList',
@@ -20,7 +21,8 @@ c.InteractiveShellApp.exec_lines = [
     [
         'from datetime import timezone',
         'from statistics import mean, median',
-        'from importlib import reload'
+        'from importlib import reload',
+        'from pathlib import Path'
     ] if six.PY3 else [
         'import pytz',
     ]
